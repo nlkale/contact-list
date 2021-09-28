@@ -99,7 +99,11 @@ class App extends Component {
     }
 
     onEditContact = (editedContact) => {
-        console.log("editdContact ", editedContact)
+        const index = this.state.List.findIndex(elem => elem.Id === editedContact.Id);
+        const tmp = [...this.state.List.slice(0, index), editedContact, ...this.state.List.slice(index + 1) ];
+        this.setState({
+            List: tmp
+        })
     }
 
     render() {
