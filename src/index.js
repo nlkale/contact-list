@@ -12,39 +12,47 @@ import Main from "./Components/Main/Main";
 import NotFound from "./Components/NotFound/NotFound"
 import AddContact from "./Components/AddContact/AddContact";
 import EditContact from "./Components/EditContact/EditContact";
+import API from "./Services/APIService";
+
+
 
 class App extends Component {
+    componentDidMount(){
+        API.GetContactList().then(list => {
+            this.setState({List: list});
+        })
+    }
 
 
     state = {
         List: [
-            {
-                Id: uuidv4(),
-                Name: "Alexander Verdnam",
-                Phone: "+1-800-600-9898",
-                Email: "example@gmail.com",
-                Gender: "lego",
-                Status: "Friend",
-                Avatar: 4
-            },
-            {
-                Id: uuidv4(),
-                Name: "Camilla Terry",
-                Phone: "+1-800-456-5890",
-                Email: "camt@gmail.com",
-                Gender: "women",
-                Status: "Private",
-                Avatar: 16
-            },
-            {
-                Id: uuidv4(),
-                Name: "Evan Piters",
-                Phone: "+1-457-090-2345",
-                Email: "evan@gmail.com",
-                Gender: "men",
-                Status: "Work",
-                Avatar: 33
-            }
+            // {
+            //     Id: uuidv4(),
+            //     Name: "Alexander Verdnam",
+            //     Phone: "+1-800-600-9898",
+            //     Email: "example@gmail.com",
+            //     Gender: "lego",
+            //     Status: "Friend",
+            //     Avatar: 4
+            // }
+            // {
+            //     Id: uuidv4(),
+            //     Name: "Camilla Terry",
+            //     Phone: "+1-800-456-5890",
+            //     Email: "camt@gmail.com",
+            //     Gender: "women",
+            //     Status: "Private",
+            //     Avatar: 16
+            // },
+            // {
+            //     Id: uuidv4(),
+            //     Name: "Evan Piters",
+            //     Phone: "+1-457-090-2345",
+            //     Email: "evan@gmail.com",
+            //     Gender: "men",
+            //     Status: "Work",
+            //     Avatar: 33
+            // }
         ],
         CurrentContact: ""
     }
@@ -68,6 +76,7 @@ class App extends Component {
         this.setState({
             List: tmpList
         })
+        API.UpdateDatabase(tmpList);
     }
 
     onDelete = (Id) => {
@@ -79,6 +88,7 @@ class App extends Component {
         this.setState({
             List: tmpList
         })
+        API.UpdateDatabase(tmpList);
 
     }
 
@@ -88,6 +98,7 @@ class App extends Component {
         this.setState({
             List: tmpList
         })
+        API.UpdateDatabase(tmpList);
     }
 
     onGetCurrentIndex = (Id) => {
@@ -103,7 +114,8 @@ class App extends Component {
         const tmp = [...this.state.List.slice(0, index), editedContact, ...this.state.List.slice(index + 1) ];
         this.setState({
             List: tmp
-        })
+        });
+        API.UpdateDatabase(tmp);
     }
 
     render() {
